@@ -1,36 +1,651 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>人工智能导论 - 课程网站</title>
-  <style>
-    body { font-family: '微软雅黑', Arial, sans-serif; margin: 20px; }
-    .container { max-width: 900px; margin: auto; }
-    nav a { margin-right: 20px; text-decoration: none; color: #3366cc; }
-    h1, h2 { color: #2d3d6b; }
-    img { max-width: 100%; margin-top: 20px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能导论 - 课程首页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        nav {
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 头部区域样式 */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), 
+                         url('https://images.unsplash.com/photo-1677442135722-5f5f2f48adaf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+            border: 2px solid transparent;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(52, 152, 219, 0.5);
+        }
+        
+        /* 课程概览样式 */
+        .overview {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-icon {
+            background: var(--secondary);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-icon i {
+            font-size: 3.5rem;
+            color: white;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .card-content ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .card-content ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .card-content ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success);
+        }
+        
+        /* 课程模块样式 */
+        .modules {
+            background: var(--light);
+            padding: 5rem 0;
+        }
+        
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .module-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--secondary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .module-header {
+            background: var(--primary);
+            color: white;
+            padding: 25px 20px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .module-header h3 {
+            font-size: 1.4rem;
+        }
+        
+        .module-content {
+            padding: 20px;
+        }
+        
+        .module-content ul {
+            list-style: none;
+        }
+        
+        .module-content ul li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .module-content ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .module-content ul li i {
+            color: var(--secondary);
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        /* 底部样式 */
+        .quick-links {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .quick-links .section-title h2 {
+            color: white;
+        }
+        
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .link-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 25px 20px;
+            transition: var(--transition);
+        }
+        
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .link-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .link-card a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .link-card a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            background: #1a252f;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-  <nav>
-    <a href="index.html">首页</a>
-    <a href="syllabus.html">课程安排</a>
-    <a href="projects.html">实验项目</a>
-    <a href="mindmap.html">思维导图</a>
-    <a href="outline.html">课程大纲</a>
-    <a href="evaluation.html">评估方式</a>
-  </nav>
-  <h1>人工智能导论</h1>
-  <h2>课程信息</h2>
-  <ul>
-    <li><b>课程名称：</b>人工智能导论</li>
-    <li><b>授课对象：</b>人工智能及相关专业本科生/研究生</li>
-    <li><b>先修课程：</b>数据结构、算法、概率统计等</li>
-  </ul>
-  <h2>课程目标</h2>
-  <p>本课程面向初学者介绍人工智能的基本概念，主要技术及其应用领域，涵盖理论讲授和实验操作。</p>
-  <img src="image1" alt="课程安排截图">
-</div>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-brain"></i> AI导论
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="course.html">课程内容</a></li>
+                <li><a href="projects/">实验项目</a></li>
+                <li><a href="syllabus.html">教学大纲</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 头部区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1>人工智能导论</h1>
+            <p>探索智能的本质，掌握AI核心技术，开启未来科技之门</p>
+            <a href="course.html" class="cta-button">开始学习 <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- 课程概览 -->
+    <section class="overview">
+        <div class="container">
+            <div class="section-title">
+                <h2>课程概览</h2>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon" style="background: #3498db;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>课程简介</h3>
+                        <p>本课程系统介绍人工智能的基本概念、发展历史、核心技术和应用领域，帮助学生构建完整的AI知识体系。</p>
+                        <ul>
+                            <li>人工智能的定义与历史背景</li>
+                            <li>主要研究领域与技术分支</li>
+                            <li>当前应用场景与发展趋势</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon" style="background: #e74c3c;">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>课程目标</h3>
+                        <p>通过理论与实践相结合的方式，培养学生的人工智能思维和解决实际问题的能力。</p>
+                        <ul>
+                            <li>掌握AI核心算法原理</li>
+                            <li>理解不同学派的方法论</li>
+                            <li>培养创新思维与实践能力</li>
+                            <li>为后续专业学习奠定基础</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon" style="background: #2ecc71;">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>学习收获</h3>
+                        <p>完成本课程后，学生将具备以下能力：</p>
+                        <ul>
+                            <li>理解AI基本概念与技术框架</li>
+                            <li>应用搜索算法解决实际问题</li>
+                            <li>实现基础机器学习模型</li>
+                            <li>理解神经网络工作原理</li>
+                            <li>分析不同AI方法的适用场景</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程模块 -->
+    <section class="modules">
+        <div class="container">
+            <div class="section-title">
+                <h2>核心知识模块</h2>
+            </div>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-number">1</div>
+                    <div class="module-header">
+                        <h3>搜索技术</h3>
+                    </div>
+                    <div class="module-content">
+                        <ul>
+                            <li><i class="fas fa-search"></i> 状态空间表示法</li>
+                            <li><i class="fas fa-route"></i> 深度优先搜索(DFS)</li>
+                            <li><i class="fas fa-expand-arrows-alt"></i> 广度优先搜索(BFS)</li>
+                            <li><i class="fas fa-star"></i> A*算法原理与应用</li>
+                            <li><i class="fas fa-cogs"></i> 搜索优化技术</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-number">2</div>
+                    <div class="module-header">
+                        <h3>机器学习基础</h3>
+                    </div>
+                    <div class="module-content">
+                        <ul>
+                            <li><i class="fas fa-chart-line"></i> 监督/无监督学习</li>
+                            <li><i class="fas fa-robot"></i> 强化学习基本原理</li>
+                            <li><i class="fas fa-project-diagram"></i> 决策树与KNN算法</li>
+                            <li><i class="fas fa-calculator"></i> 朴素贝叶斯分类</li>
+                            <li><i class="fas fa-brain"></i> 深度学习简介</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-number">3</div>
+                    <div class="module-header">
+                        <h3>符号学派</h3>
+                    </div>
+                    <div class="module-content">
+                        <ul>
+                            <li><i class="fas fa-puzzle-piece"></i> 知识表示方法</li>
+                            <li><i class="fas fa-sitemap"></i> 产生式系统</li>
+                            <li><i class="fas fa-project-diagram"></i> 框架表示法</li>
+                            <li><i class="fas fa-share-alt"></i> 语义网络</li>
+                            <li><i class="fas fa-lightbulb"></i> 逻辑推理技术</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-number">4</div>
+                    <div class="module-header">
+                        <h3>连接学派</h3>
+                    </div>
+                    <div class="module-content">
+                        <ul>
+                            <li><i class="fas fa-network-wired"></i> 神经网络基础</li>
+                            <li><i class="fas fa-eye"></i> 卷积神经网络(CNN)</li>
+                            <li><i class="fas fa-redo"></i> 循环神经网络(RNN)</li>
+                            <li><i class="fas fa-chess-board"></i> 生成对抗网络(GAN)</li>
+                            <li><i class="fas fa-focus"></i> 注意力机制</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-number">5</div>
+                    <div class="module-header">
+                        <h3>行为学派</h3>
+                    </div>
+                    <div class="module-content">
+                        <ul>
+                            <li><i class="fas fa-chart-bar"></i> 智能优化算法</li>
+                            <li><i class="fas fa-dna"></i> 遗传算法原理</li>
+                            <li><i class="fas fa-sync-alt"></i> 强化学习进阶</li>
+                            <li><i class="fas fa-bolt"></i> Q-learning算法</li>
+                            <li><i class="fas fa-gamepad"></i> 实际应用案例分析</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 快速链接 -->
+    <section class="quick-links">
+        <div class="container">
+            <div class="section-title">
+                <h2>课程资源</h2>
+            </div>
+            <div class="link-grid">
+                <div class="link-card">
+                    <i class="fas fa-book"></i>
+                    <a href="course.html">课程内容详情</a>
+                </div>
+                <div class="link-card">
+                    <i class="fas fa-tasks"></i>
+                    <a href="projects/">实验项目</a>
+                </div>
+                <div class="link-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <a href="syllabus.html">教学大纲</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2023 人工智能导论课程 | 设计：人工智能导论课程组 | 内容仅供参考学习</p>
+            <p>课程负责人：人工智能导论课程组队 | 邮箱：example@hust.edu.cn</p>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的滚动效果增强
+        document.addEventListener('DOMContentLoaded', function() {
+            // 导航栏滚动效果
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.style.padding = '0.8rem 0';
+                    nav.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                } else {
+                    nav.style.padding = '1.2rem 0';
+                    nav.style.boxShadow = 'none';
+                }
+            });
+            
+            // 模块卡片悬停效果
+            const moduleCards = document.querySelectorAll('.module-card');
+            moduleCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
