@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能导论 - 课程内容</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        nav {
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), 
+                         url('https://images.unsplash.com/photo-1677442135133-33d364e0506e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 章节导航 */
+        .chapter-nav {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 85px;
+            z-index: 900;
+        }
+        
+        .chapter-nav h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .chapter-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .chapter-links a {
+            background: var(--light);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .chapter-links a:hover,
+        .chapter-links a.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        /* 章节内容 */
+        .chapter {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+        
+        .chapter:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .chapter-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chapter-header h3 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chapter-header i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .chapter-header .icon {
+            transition: var(--transition);
+        }
+        
+        .chapter-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .chapter.active .chapter-content {
+            padding: 20px;
+            max-height: 2000px;
+        }
+        
+        .chapter.active .chapter-header .icon {
+            transform: rotate(180deg);
+        }
+        
+        .topic {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .topic:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .topic h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic h4 i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+        
+        .topic ul {
+            list-style: none;
+            margin-left: 20px;
+        }
+        
+        .topic ul li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .topic ul li::before {
+            content: '\f054';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+        
+        .subtopics {
+            margin-top: 10px;
+            margin-left: 30px;
+            padding-left: 20px;
+            border-left: 2px dashed var(--light);
+        }
+        
+        /* PDF资源区域 */
+        .resources {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .resources h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .resources h4 i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .resource-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .resource-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .resource-icon i {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .resource-info {
+            flex-grow: 1;
+        }
+        
+        .resource-info h5 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .resource-info .size {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .download-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        
+        .download-btn:hover {
+            background: #27ae60;
+            transform: scale(1.1);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: #1a252f;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .chapter-header h3 {
+                font-size: 1.3rem;
+            }
+            
+            .chapter-links a {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-brain"></i> 人工智能导论
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="course.html" class="active">课程内容</a></li>
+                <li><a href="projects/">实验项目</a></li>
+                <li><a href="syllabus.html">教学大纲</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>人工智能导论课程内容</h1>
+            <p>系统掌握人工智能核心知识体系，从基础概念到前沿技术</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- 章节导航 -->
+        <div class="chapter-nav">
+            <h2><i class="fas fa-bookmark"></i> 课程章节</h2>
+            <div class="chapter-links">
+                <a href="#chapter0" class="active">人工智能概述</a>
+                <a href="#chapter1">搜索技术</a>
+                <a href="#chapter2">机器学习基础</a>
+                <a href="#chapter3">符号学派</a>
+                <a href="#chapter4">连接学派</a>
+                <a href="#chapter5">行为学派</a>
+            </div>
+        </div>
+
+        <!-- 第0章：人工智能概述 -->
+        <div class="chapter active" id="chapter0">
+            <div class="chapter-header">
+                <h3><i class="fas fa-globe-asia"></i> 第0章：人工智能概述</h3>
+                <div class="icon"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="chapter-content">
+                <div class="topic">
+                    <h4><i class="fas fa-book"></i> 定义与历史背景</h4>
+                    <ul>
+                        <li>人工智能的基本定义与范畴</li>
+                        <li>AI发展的关键历史阶段</li>
+                        <li>图灵测试与人工智能哲学</li>
+                        <li>强AI与弱AI的区别</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-sitemap"></i> 主要研究领域</h4>
+                    <ul>
+                        <li>知识表示与推理</li>
+                        <li>机器学习与数据挖掘</li>
+                        <li>计算机视觉</li>
+                        <li>自然语言处理</li>
+                        <li>机器人学与智能控制</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-chart-line"></i> 当前应用与发展前景</h4>
+                    <ul>
+                        <li>人工智能在各行业的应用案例</li>
+                        <li>当前技术发展的瓶颈与挑战</li>
+                        <li>未来十年AI发展趋势预测</li>
+                        <li>AI伦理与社会影响</li>
+                    </ul>
+                </div>
+                
+                <div class="resources">
+                    <h4><i class="fas fa-file-pdf"></i> 相关学习资源</h4>
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>0. 人工智能概述.pdf</h5>
+                                <div class="size">6.20 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('0. 人工智能概述.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第1章：搜索技术 -->
+        <div class="chapter" id="chapter1">
+            <div class="chapter-header">
+                <h3><i class="fas fa-search"></i> 第1章：搜索技术</h3>
+                <div class="icon"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="chapter-content">
+                <div class="topic">
+                    <h4><i class="fas fa-cogs"></i> 基本概念</h4>
+                    <ul>
+                        <li>问题求解与状态空间</li>
+                        <li>搜索策略的分类与比较</li>
+                        <li>启发式搜索原理</li>
+                        <li>搜索算法的复杂度分析</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-project-diagram"></i> 核心搜索算法</h4>
+                    <ul>
+                        <li>深度优先搜索(DFS)原理与实现</li>
+                        <li>广度优先搜索(BFS)原理与实现</li>
+                        <li>A*算法及其优化变体</li>
+                        <li>迭代加深搜索(IDDFS)</li>
+                        <li>双向搜索算法</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-laptop-code"></i> 实例应用</h4>
+                    <ul>
+                        <li>八数码问题求解</li>
+                        <li>路径规划与导航</li>
+                        <li>游戏AI中的搜索应用</li>
+                        <li>组合优化问题求解</li>
+                    </ul>
+                </div>
+                
+                <div class="resources">
+                    <h4><i class="fas fa-file-pdf"></i> 相关学习资源</h4>
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>1.搜索.pdf</h5>
+                                <div class="size">2.43 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('1.搜索.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第2章：机器学习基础 -->
+        <div class="chapter" id="chapter2">
+            <div class="chapter-header">
+                <h3><i class="fas fa-robot"></i> 第2章：机器学习基础</h3>
+                <div class="icon"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="chapter-content">
+                <div class="topic">
+                    <h4><i class="fas fa-shapes"></i> 基本概念</h4>
+                    <ul>
+                        <li>机器学习定义与基本流程</li>
+                        <li>监督学习、无监督学习与强化学习</li>
+                        <li>模型评估与选择</li>
+                        <li>偏差-方差权衡</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-project-diagram"></i> 主要算法介绍</h4>
+                    <ul>
+                        <li>K近邻算法(KNN)原理与应用</li>
+                        <li>决策树与随机森林</li>
+                        <li>朴素贝叶斯分类器</li>
+                        <li>逻辑回归与线性模型</li>
+                        <li>支持向量机(SVM)基础</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-brain"></i> 深度学习简介</h4>
+                    <ul>
+                        <li>神经网络基本原理</li>
+                        <li>前向传播与反向传播</li>
+                        <li>激活函数的作用与选择</li>
+                        <li>深度学习应用场景</li>
+                    </ul>
+                </div>
+                
+                <div class="resources">
+                    <h4><i class="fas fa-file-pdf"></i> 相关学习资源</h4>
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>2.机器学习.pdf</h5>
+                                <div class="size">1.33 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('2.机器学习.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3章：符号学派 -->
+        <div class="chapter" id="chapter3">
+            <div class="chapter-header">
+                <h3><i class="fas fa-puzzle-piece"></i> 第3章：符号学派</h3>
+                <div class="icon"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="chapter-content">
+                <div class="topic">
+                    <h4><i class="fas fa-lightbulb"></i> 知识表达</h4>
+                    <ul>
+                        <li>知识与知识表示的基本概念</li>
+                        <li>知识表示的重要性</li>
+                        <li>不同知识表示方法的比较</li>
+                    </ul>
+                </div>
+                
+                <div class="resources">
+                    <h4><i class="fas fa-file-pdf"></i> 相关学习资源</h4>
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>3. 符号学派 - 知识表达(1)-谓词逻辑.pdf</h5>
+                                <div class="size">0.88 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('3. 符号学派 - 知识表达(1)-谓词逻辑.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>3. 符号学派 - 知识表达(2) 产生式框架知识图谱.pdf</h5>
+                                <div class="size">2.95 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('3. 符号学派 - 知识表达(2) 产生式框架知识图谱.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+
+                          <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>3. 符号学派 - 知识推理.pdf</h5>
+                                <div class="size">4.91 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('3. 符号学派 - 知识推理.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4章：连接学派 -->
+        <div class="chapter" id="chapter4">
+            <div class="chapter-header">
+                <h3><i class="fas fa-network-wired"></i> 第4章：连接学派</h3>
+                <div class="icon"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="chapter-content">
+                <div class="topic">
+                    <h4><i class="fas fa-microchip"></i> 神经网络基础</h4>
+                    <ul>
+                        <li>神经元模型与感知机</li>
+                        <li>多层感知机(MLP)结构</li>
+                        <li>反向传播算法详解</li>
+                        <li>梯度消失与爆炸问题</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-eye"></i> 卷积神经网络(CNN)</h4>
+                    <ul>
+                        <li>卷积层原理与操作</li>
+                        <li>池化层的作用</li>
+                        <li>经典CNN架构分析</li>
+                        <li>CNN在计算机视觉中的应用</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-redo"></i> 循环神经网络(RNN)</h4>
+                    <ul>
+                        <li>RNN基本结构与工作原理</li>
+                        <li>长短期记忆网络(LSTM)</li>
+                        <li>门控循环单元(GRU)</li>
+                        <li>RNN在序列建模中的应用</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-chess-board"></i> 生成对抗网络(GAN)</h4>
+                    <ul>
+                        <li>GAN的基本原理</li>
+                        <li>生成器与判别器的博弈</li>
+                        <li>GAN的变体与应用</li>
+                        <li>GAN训练中的挑战</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-focus"></i> 注意力机制</h4>
+                    <ul>
+                        <li>注意力机制的基本思想</li>
+                        <li>自注意力与Transformer</li>
+                        <li>注意力在NLP中的应用</li>
+                        <li>视觉注意力模型</li>
+                    </ul>
+                </div>
+                
+                <div class="resources">
+                    <h4><i class="fas fa-file-pdf"></i> 相关学习资源</h4>
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>4.1 连接学派 - 基础神经网络.pdf</h5>
+                                <div class="size">6.81 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('4.1 连接学派 - 基础神经网络.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>4.2 连接学派 - 卷积神经网络.pdf</h5>
+                                <div class="size">19.4 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('4.2 连接学派 - 卷积神经网络.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>4.3.1 连接学派 - 生成对抗网络.pdf</h5>
+                                <div class="size">3.27 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('4.3.1 连接学派 - 生成对抗网络.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>4.3.2 连接学派 - 图神经网络.pdf</h5>
+                                <div class="size">6.30 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('4.3.2 连接学派 - 图神经网络.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+
+                          <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>4.3.3 连接学派 - 循环神经网络.pdf</h5>
+                                <div class="size">7.83 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('4.3.3 连接学派 - 循环神经网络.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+
+                          <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>11.3 连接学派 - 注意力网络.pdf</h5>
+                                <div class="size">7.83 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('4.4 连接学派 - 注意力网络.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第5章：行为学派 -->
+        <div class="chapter" id="chapter5">
+            <div class="chapter-header">
+                <h3><i class="fas fa-chart-line"></i> 第5章：行为学派</h3>
+                <div class="icon"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="chapter-content">
+                <div class="topic">
+                    <h4><i class="fas fa-cogs"></i> 智能优化</h4>
+                    <ul>
+                        <li>优化问题与智能算法</li>
+                        <li>遗传算法原理与实现</li>
+                        <li>粒子群优化算法</li>
+                        <li>蚁群算法及应用</li>
+                        <li>模拟退火算法</li>
+                    </ul>
+                </div>
+                
+                <div class="topic">
+                    <h4><i class="fas fa-gamepad"></i> 强化学习</h4>
+                    <ul>
+                        <li>强化学习基本框架</li>
+                        <li>马尔可夫决策过程</li>
+                        <li>Q-learning算法详解</li>
+                        <li>深度Q网络(DQN)</li>
+                        <li>策略梯度方法</li>
+                    </ul>
+                    
+                    <div class="subtopics">
+                        <h4><i class="fas fa-laptop-code"></i> 实际应用案例分析</h4>
+                        <ul>
+                            <li>游戏AI中的强化学习</li>
+                            <li>机器人控制与路径规划</li>
+                            <li>推荐系统中的RL应用</li>
+                            <li>自动驾驶中的决策系统</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="resources">
+                    <h4><i class="fas fa-file-pdf"></i> 相关学习资源</h4>
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>5. 行为学派-01智能优化.pdf</h5>
+                                <div class="size">11.2 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('5. 行为学派-01智能优化.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h5>5. 行为学派-02强化学习.pdf</h5>
+                                <div class="size">14.4 MB</div>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('5. 行为学派-02强化学习.pdf')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2025 人工智能导论课程 | 设计：人工智能导论课程组 | 内容仅供参考学习</p>
+            <p>课程负责：人工智能导论课程组 | 邮箱：example@hust.edu.cn</p>
+        </div>
+    </footer>
+
+    <script>
+        // 章节折叠功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const chapters = document.querySelectorAll('.chapter');
+            
+            chapters.forEach(chapter => {
+                const header = chapter.querySelector('.chapter-header');
+                
+                header.addEventListener('click', function() {
+                    chapter.classList.toggle('active');
+                });
+            });
+            
+            // 平滑滚动到锚点
+            document.querySelectorAll('.chapter-links a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 更新活动状态
+                    document.querySelectorAll('.chapter-links a').forEach(a => {
+                        a.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 展开目标章节
+                    chapters.forEach(chapter => {
+                        chapter.classList.remove('active');
+                    });
+                    targetElement.classList.add('active');
+                });
+            });
+        });
+        
+        // PDF下载功能
+        function downloadPDF(filename) {
+            window.location.href = `AI Introduction/${filename}`;
+            
+            // 模拟下载效果
+            alert(`即将下载: ${filename}\n\n在实际部署中，此按钮将下载对应PDF文件`);
+            
+            // 创建下载效果
+            const downloadBtn = event.currentTarget;
+            const originalHTML = downloadBtn.innerHTML;
+            
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            downloadBtn.style.backgroundColor = '#27ae60';
+            
+            setTimeout(() => {
+                downloadBtn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    downloadBtn.innerHTML = originalHTML;
+                    downloadBtn.style.backgroundColor = '';
+                }, 1500);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
