@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能导论 - 实验项目</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        nav {
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), 
+                         url('https://images.unsplash.com/photo-1677442135133-33d364e0506e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 实验项目网格 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-icon {
+            height: 120px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .project-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .project-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .project-title h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .project-tag {
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .project-description {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tech-item {
+            background: var(--light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .project-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: #1a252f;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-brain"></i> 人工智能导论
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../course.html">课程内容</a></li>
+                <li><a href="index.html" class="active">实验项目</a></li>
+                <li><a href="../syllabus.html">教学大纲</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>人工智能导论实验项目</h1>
+            <p>通过实践掌握AI核心技术，培养解决实际问题的能力</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="projects-grid">
+            <!-- 实验1: 鸢尾花分类 -->
+            <div class="project-card">
+                <div class="project-icon" style="background: #3498db;">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                        <h3>鸢尾花分类</h3>
+                        <span class="project-tag">分类任务</span>
+                    </div>
+                    
+                    <div class="project-meta">
+                        <span><i class="fas fa-clock"></i> 2小时</span>
+                        <span><i class="fas fa-star"></i> 入门</span>
+                    </div>
+                    
+                    <div class="project-description">
+                        <p>使用支持向量机(SVM)根据花萼和花瓣特征对鸢尾花进行分类，探索不同特征对分类准确率的影响。</p>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">Scikit-learn</span>
+                        <span class="tech-item">Matplotlib</span>
+                    </div>
+                    
+                    <div class="project-actions">
+                        <a href="../AI_Introduction/实验1-鸢尾花分类.pdf" class="btn btn-primary">
+                            <i class="fas fa-download"></i> 实验报告
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 实验2: 波士顿房价预测 -->
+            <div class="project-card">
+                <div class="project-icon" style="background: #e74c3c;">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                        <h3>波士顿房价预测</h3>
+                        <span class="project-tag">回归任务</span>
+                    </div>
+                    
+                    <div class="project-meta">
+                        <span><i class="fas fa-clock"></i> 3小时</span>
+                        <span><i class="fas fa-star"></i> 中级</span>
+                    </div>
+                    
+                    <div class="project-description">
+                        <p>建立线性回归模型预测波士顿房价，研究学习率对模型收敛速度和预测准确性的影响。</p>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">PaddlePaddle</span>
+                        <span class="tech-item">NumPy</span>
+                    </div>
+                    
+                    <div class="project-actions">
+                        <a href="../AI_Introduction/实验2-波士顿房价预测.pdf" class="btn btn-primary">
+                            <i class="fas fa-download"></i> 实验报告
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 实验3: 情感分类 -->
+            <div class="project-card">
+                <div class="project-icon" style="background: #2ecc71;">
+                    <i class="fas fa-smile"></i>
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                        <h3>情感分类</h3>
+                        <span class="project-tag">自然语言处理</span>
+                    </div>
+                    
+                    <div class="project-meta">
+                        <span><i class="fas fa-clock"></i> 4小时</span>
+                        <span><i class="fas fa-star"></i> 高级</span>
+                    </div>
+                    
+                    <div class="project-description">
+                        <p>使用LSTM网络对IMDB影评进行情感分析，研究训练轮数对模型准确率的影响。</p>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">PaddlePaddle</span>
+                        <span class="tech-item">LSTM</span>
+                    </div>
+                    
+                    <div class="project-actions">
+                        <a href="../AI_Introduction/实验3-情感分类.pdf" class="btn btn-primary">
+                            <i class="fas fa-download"></i> 实验报告
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 实验4: 手写数字识别 -->
+            <div class="project-card">
+                <div class="project-icon" style="background: #f39c12;">
+                    <i class="fas fa-pen"></i>
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                        <h3>手写数字识别</h3>
+                        <span class="project-tag">计算机视觉</span>
+                    </div>
+                    
+                    <div class="project-meta">
+                        <span><i class="fas fa-clock"></i> 3小时</span>
+                        <span><i class="fas fa-star"></i> 中级</span>
+                    </div>
+                    
+                    <div class="project-description">
+                        <p>构建多层感知器(MLP)模型识别手写数字，探索神经网络在图像识别任务中的应用。</p>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">PaddlePaddle</span>
+                        <span class="tech-item">MNIST</span>
+                    </div>
+                    
+                    <div class="project-actions">
+                        <a href="../AI_Introduction/实验4-手写数字识别.pdf" class="btn btn-primary">
+                            <i class="fas fa-download"></i> 实验报告
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 实验5: 动物识别系统 -->
+            <div class="project-card">
+                <div class="project-icon" style="background: #9b59b6;">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <div class="project-content">
+                    <div class="project-title">
+                        <h3>动物识别系统</h3>
+                        <span class="project-tag">知识系统</span>
+                    </div>
+                    
+                    <div class="project-meta">
+                        <span><i class="fas fa-clock"></i> 5小时</span>
+                        <span><i class="fas fa-star"></i> 高级</span>
+                    </div>
+                    
+                    <div class="project-description">
+                        <p>基于产生式系统构建动物识别专家系统，实现虎、豹、斑马等七种动物的智能识别。</p>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">Tkinter</span>
+                        <span class="tech-item">规则推理</span>
+                    </div>
+                    
+                    <div class="project-actions">
+                        <a href="../AI_Introduction/实验5-动物识别系统.pdf" class="btn btn-primary">
+                            <i class="fas fa-download"></i> 实验报告
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2025 人工智能导论课程 | 设计：人工智能导论课程组 | 内容仅供参考学习</p>
+            <p>课程负责人：人工智能导论课程组 | 邮箱：example@hust.edu.cn</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 卡片悬停效果
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // 导航栏滚动效果
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.style.padding = '0.8rem 0';
+                    nav.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                } else {
+                    nav.style.padding = '1.2rem 0';
+                    nav.style.boxShadow = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
