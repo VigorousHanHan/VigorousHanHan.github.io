@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能导论 - 教学大纲</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        nav {
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), 
+                         url('https://images.unsplash.com/photo-1677442135722-5f5f2f48adaf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 大纲内容区域 */
+        .syllabus-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+        
+        .syllabus-section:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .section-title i {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-right: 15px;
+        }
+        
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        /* 课程信息 */
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .info-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .info-content h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .info-content p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+        
+        /* 时间轴样式 */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary);
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            left: 55%;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            left: 5%;
+        }
+        
+        .timeline-content {
+            position: relative;
+            width: 45%;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .timeline-period {
+            position: absolute;
+            top: 15px;
+            width: 100px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-period {
+            right: -120px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-period {
+            left: -120px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border: 4px solid white;
+            border-radius: 50%;
+            top: 20px;
+            left: 50%;
+            margin-left: -10px;
+            box-shadow: 0 0 0 3px var(--secondary);
+        }
+        
+        .timeline-title {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .timeline-subtitle {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .timeline-content ul {
+            list-style: none;
+            margin-left: 15px;
+        }
+        
+        .timeline-content ul li {
+            padding: 6px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .timeline-content ul li::before {
+            content: '\f054';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+        
+        .expand-btn {
+            background: var(--light);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--primary);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .expand-btn i {
+            margin-left: 8px;
+            transition: var(--transition);
+        }
+        
+        .expand-btn:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .extra-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            padding-top: 0;
+        }
+        
+        .expanded .extra-content {
+            max-height: 500px;
+            padding-top: 15px;
+        }
+        
+        .expanded .expand-btn i {
+            transform: rotate(180deg);
+        }
+        
+        /* 评估方式 */
+        .evaluation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .evaluation-table th {
+            background: var(--primary);
+            color: white;
+            text-align: left;
+            padding: 15px;
+        }
+        
+        .evaluation-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .evaluation-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .evaluation-table tr:hover {
+            background: #f1f7ff;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 20px;
+            margin-top: 5px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: #1a252f;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 85px);
+                margin-left: 70px;
+                left: 0 !important;
+            }
+            
+            .timeline-period {
+                left: 0;
+                width: 60px;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-period,
+            .timeline-item:nth-child(even) .timeline-period {
+                left: 0;
+                right: auto;
+                top: -25px;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-brain"></i> 人工智能导论
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="course.html">课程内容</a></li>
+                <li><a href="projects/">实验项目</a></li>
+                <li><a href="syllabus.html" class="active">教学大纲</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>人工智能导论教学大纲</h1>
+            <p>2025年春季学期 | 全面了解课程安排、学习目标与评估方式</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- 课程信息 -->
+        <div class="syllabus-section">
+            <div class="section-title">
+                <i class="fas fa-info-circle"></i>
+                <h2>课程信息</h2>
+            </div>
+            
+            <div class="course-info">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>课程负责人</h3>
+                        <p>人工智能导论课程组</p>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>课程学分</h3>
+                        <p>3学分（理论2学分 + 实验1学分）</p>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>学时安排</h3>
+                        <p>10周，前8周为理论课，最后两周为实验课，每周4学时，共计40学时</p>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>先修课程</h3>
+                        <p>数据结构、算法分析、概率统计</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 课程目标 -->
+        <div class="syllabus-section">
+            <div class="section-title">
+                <i class="fas fa-bullseye"></i>
+                <h2>课程目标</h2>
+            </div>
+            
+            <div class="goal-content">
+                <p>本课程旨在为学生提供系统的人工智能知识框架和实践机会，通过理论讲解和实践分析相结合的方式，帮助学生掌握人工智能的核心技术、方法和应用。</p>
+                
+                <div class="goal-cards">
+                    <div class="goal-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>知识目标</h3>
+                        <ul>
+                            <li>理解人工智能的基本概念和发展历程</li>
+                            <li>掌握搜索技术、机器学习等核心算法原理</li>
+                            <li>了解不同人工智能学派的方法论特点</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="goal-card">
+                        <i class="fas fa-cogs"></i>
+                        <h3>能力目标</h3>
+                        <ul>
+                            <li>具备应用AI算法解决实际问题的能力</li>
+                            <li>掌握基本AI模型的设计与实现技能</li>
+                            <li>培养创新思维和科研探索能力</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="goal-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>素养目标</h3>
+                        <ul>
+                            <li>理解AI技术的社会影响与伦理问题</li>
+                            <li>培养团队协作和沟通表达能力</li>
+                            <li>形成持续学习和跟踪前沿技术的习惯</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 课程安排 -->
+        <div class="syllabus-section">
+            <div class="section-title">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>课程安排</h2>
+            </div>
+            
+            <div class="timeline">
+                <!-- 第1周 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-period">第1周</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">引言与概述</h3>
+                        <h4 class="timeline-subtitle">人工智能简介</h4>
+                        <ul>
+                            <li>什么是人工智能：定义、范畴与分类</li>
+                            <li>历史背景及发展历程：从图灵测试到深度学习</li>
+                            <li>当前应用场景及未来展望：行业应用与技术趋势</li>
+                        </ul>
+                        <button class="expand-btn">扩展内容 <i class="fas fa-chevron-down"></i></button>
+                        <div class="extra-content">
+                            <p><strong>学习资源：</strong>人工智能概述.pdf，AI发展简史.pdf</p>
+                            <p><strong>实践任务：</strong>调研一个AI应用案例并进行分析</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第2周 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-period">第2周</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">搜索技术</h3>
+                        <h4 class="timeline-subtitle">搜索算法基础</h4>
+                        <ul>
+                            <li>问题求解与状态空间表示法</li>
+                            <li>深度优先搜索(DFS)与广度优先搜索(BFS)</li>
+                            <li>启发式搜索与A*算法</li>
+                            <li>博弈搜索与优化技术</li>
+                        </ul>
+                        <button class="expand-btn">扩展内容 <i class="fas fa-chevron-down"></i></button>
+                        <div class="extra-content">
+                            <p><strong>实验项目：</strong>八数码问题求解实现</p>
+                            <p><strong>学习资源：</strong>搜索技术基础.pdf，A*算法详解.pdf</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第3周 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-period">第3周</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">机器学习基础</h3>
+                        <h4 class="timeline-subtitle">机器学习入门</h4>
+                        <ul>
+                            <li>监督学习、无监督学习与强化学习</li>
+                            <li>K近邻算法与决策树</li>
+                            <li>朴素贝叶斯与逻辑回归</li>
+                            <li>模型评估与选择方法</li>
+                        </ul>
+                        <button class="expand-btn">扩展内容 <i class="fas fa-chevron-down"></i></button>
+                        <div class="extra-content">
+                            <p><strong>实验项目：</strong>实现一个简单的分类器</p>
+                            <p><strong>学习资源：</strong>机器学习基础.pdf，分类算法实战指南.pdf</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第4-5周 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-period">第4-5周</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">符号学派</h3>
+                        <h4 class="timeline-subtitle">知识表达与推理</h4>
+                        <ul>
+                            <li>谓词逻辑与知识表示</li>
+                            <li>产生式系统与推理机制</li>
+                            <li>框架表示法与语义网络</li>
+                            <li>模糊推理与不确定性处理</li>
+                        </ul>
+                        <button class="expand-btn">扩展内容 <i class="fas fa-chevron-down"></i></button>
+                        <div class="extra-content">
+                            <p><strong>实践任务：</strong>构建一个简单的专家系统</p>
+                            <p><strong>学习资源：</strong>知识表达方法.pdf，推理机制详解.pdf</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第6-7周 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-period">第6-7周</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">连接学派</h3>
+                        <h4 class="timeline-subtitle">神经网络与深度学习</h4>
+                        <ul>
+                            <li>神经网络基础与前向传播</li>
+                            <li>卷积神经网络(CNN)原理与应用</li>
+                            <li>循环神经网络(RNN)与长短期记忆(LSTM)</li>
+                            <li>生成对抗网络(GAN)基础</li>
+                        </ul>
+                        <button class="expand-btn">扩展内容 <i class="fas fa-chevron-down"></i></button>
+                        <div class="extra-content">
+                            <p><strong>实验项目：</strong>使用CNN实现图像分类</p>
+                            <p><strong>学习资源：</strong>神经网络基础.pdf，深度学习实战.pdf</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第8周 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-period">第8周</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">行为学派</h3>
+                        <h4 class="timeline-subtitle">强化学习与智能优化</h4>
+                        <ul>
+                            <li>强化学习基本概念与框架</li>
+                            <li>Q-learning与深度Q网络(DQN)</li>
+                            <li>遗传算法与群体智能优化</li>
+                            <li>实际应用案例分析</li>
+                        </ul>
+                        <button class="expand-btn">扩展内容 <i class="fas fa-chevron-down"></i></button>
+                        <div class="extra-content">
+                            <p><strong>实验项目：</strong>实现简单的强化学习模型</p>
+                            <p><strong>学习资源：</strong>强化学习基础.pdf，智能优化算法.pdf</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第9-10周 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-period">第9-10周</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">课程实验安排</h3>
+                        <ul>
+                            <li>鸢尾花分类</li>
+                            <li>波士顿房价预测</li>
+                            <li>情感分类</li>
+                            <li>手写数字识别</li>
+                            <li>动物识别系统</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 评估方式 -->
+        <div class="syllabus-section">
+            <div class="section-title">
+                <i class="fas fa-clipboard-check"></i>
+                <h2>评估方式</h2>
+            </div>
+            
+            <table class="evaluation-table">
+                <thead>
+                    <tr>
+                        <th>评估项目</th>
+                        <th>占比</th>
+                        <th>说明</th>
+                        <th>时间安排</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>平时作业</td>
+                        <td>
+                            10%
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 10%"></div>
+                            </div>
+                        </td>
+                        <td>每章课后练习题，主要考察基础概念理解</td>
+                        <td>第2、4、6、8周布置，次周提交</td>
+                    </tr>
+                    <tr>
+                        <td>课程实验</td>
+                        <td>
+                            10%
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 10%"></div>
+                            </div>
+                        </td>
+                        <td>5次实验项目报告，考察动手实践能力</td>
+                        <td>第10周提交</td>
+                    </tr>
+                    <tr>
+                        <td>课堂参与</td>
+                        <td>
+                            10%
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 10%"></div>
+                            </div>
+                        </td>
+                        <td>课堂参与情况，包括考勤、回答问题等</td>
+                        <td>每次课堂上考核</td>
+                    </tr>
+                    <tr>
+                        <td>期末考试</td>
+                        <td>
+                            70%
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 30%"></div>
+                            </div>
+                        </td>
+                        <td>闭卷考试，覆盖全部理论课内容</td>
+                        <td>理论课结束后的第9周</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="evaluation-notes" style="margin-top: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <h4><i class="fas fa-exclamation-circle"></i> 评估说明：</h4>
+                <ul>
+                    <li>总成绩 = 平时作业(10%) + 课程实验(10%) + 课堂参与(10%) + 期末考试(70%)</li>
+                    <li>课程实验完成后需找老师验收，并向学委提交实验报告，学委统一收齐后再提交给老师</li>
+                    <li>期末考试为闭卷形式，重点考察综合应用能力</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2025 人工智能导论课程 | 设计：人工智能导论课程组 | 内容仅供参考学习</p>
+            <p>课程负责人：人工智能导论课程组 | 邮箱：example@hust.edu.cn</p>
+        </div>
+    </footer>
+
+    <script>
+        // 章节展开功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 展开按钮功能
+            const expandButtons = document.querySelectorAll('.expand-btn');
+            
+            expandButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const timelineItem = this.closest('.timeline-content');
+                    
+                    timelineItem.classList.toggle('expanded');
+                });
+            });
+            
+            // 进度条动画
+            const progressBars = document.querySelectorAll('.progress-bar');
+            
+            // 观察进度条进入视口时触发动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 300);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            progressBars.forEach(bar => {
+                observer.observe(bar);
+            });
+            
+            // 导航栏滚动效果
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.style.padding = '0.8rem 0';
+                    nav.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                } else {
+                    nav.style.padding = '1.2rem 0';
+                    nav.style.boxShadow = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
